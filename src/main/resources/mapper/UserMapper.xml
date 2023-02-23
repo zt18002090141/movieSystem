@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.system.mapper.UserMapper">
+
+
+
+    <select id="getNavMenuIds" resultType="java.lang.Long">
+        select Distinct rm.menu_id
+        from sys_user_role as ur left join sys_role_menu as rm ON ur.role_id =rm.role_id
+        where ur.user_id=#{userId}
+    </select>
+<!--    通过menuid查找与菜单编号相关联的所有用户-->
+    <select id="getUserListByMenuId" resultType="com.system.entity.User" parameterType="java.lang.Long">
+        select distinct u.*
+        from sys_user_role as ur
+        left join sys_role_menu as rm on ur.role_id
+        left join sys_user as u on u.id = ur.user_id
+        where rm.menu_id = #{menuId}
+
+    </select>
+</mapper>
